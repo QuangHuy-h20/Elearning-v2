@@ -18,8 +18,8 @@ import Alert from "../../components/Alert";
 type IProfileInputs = Omit<UpdateUserInput, "id">;
 
 const schema: yup.SchemaOf<IProfileInputs> = yup.object().shape({
-  email: yup.string().required().default(""),
-  password: yup.string().notRequired().default(""),
+  email: yup.string().email().required().default(""),
+  password: yup.string().notRequired().default("").min("password must be greater than 5 characters").max("password must be smaller than 16 characters"),
   phoneNumber: yup.string().notRequired().default(""),
 });
 

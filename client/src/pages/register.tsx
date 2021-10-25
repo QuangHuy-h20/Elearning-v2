@@ -14,10 +14,11 @@ import { useCheckAuth } from "../utils/useCheckAuth";
 import Link from "next/link";
 
 const schema: yup.SchemaOf<RegisterInput> = yup.object().shape({
-  username: yup.string().required("Username is required").default(""),
-  password: yup.string().required("Password is required").default(""),
-  email: yup.string().required("Email is required").default(""),
+  username: yup.string().required("Username is required").min("username must be greater than 5 characters").max("username must be smaller than 16 characters").default(""),
+  password: yup.string().required("Password is required").default("").min("password must be greater than 5 characters").max("password must be smaller than 16 characters"),
+  email: yup.string().email().required("Email is required").default(""),
 });
+
 type Field = "username" | "password" | "email";
 
 const Register = () => {

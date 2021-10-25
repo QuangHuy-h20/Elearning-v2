@@ -107,6 +107,10 @@ const Course = () => {
         <h4 className="text-sm my-3 text-gray-300">
           Created by: <strong>{data.course.user.username}</strong>
         </h4>
+        <h5 className="text-sm my-3 text-gray-300">
+          Students: <strong>{data.course.numberOfStudent}</strong>
+        </h5>
+        
         <p className="text-sm">Last updated: {newDate}</p>
 
         <h2 className="text-2xl mt-10 mb-2">Description</h2>
@@ -129,9 +133,9 @@ const Course = () => {
           </div>
           <div className="flex flex-col justify-center my-6  ">
             {!meData?.me ? (
-              <button className="bg-indigo-500 w-full active:bg-indigo-600 my-3  text-base px-8 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+              <button className="border border-red-400 w-full hover:bg-red-400 my-3 px-8 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                 <NextLink href="/login">
-                  <a>You need to login to enroll this course</a>
+                  <a>Login to enroll this course</a>
                 </NextLink>
               </button>
             ) : (

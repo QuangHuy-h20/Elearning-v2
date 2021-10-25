@@ -13,6 +13,7 @@ import DownArrow from "../icons/DownArrowIcon";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { Transition } from "@headlessui/react";
+import Burger from "../icons/Burger";
 
 const Navbar = () => {
   const route = useRouter();
@@ -175,43 +176,53 @@ const Navbar = () => {
   };
 
   return (
-    <header className="relative flex justify-between items-center h-20 px-56 xl:px-20 lg:px-10 md:px-8">
+    <header className="relative flex justify-between items-center h-20 px-6 md:px-12 lg:px-24 2xl:px-56 ">
       <nav className="flex justify-between items-center w-full h-full py-5">
-        <div className="logo border-r border-gray-700 pr-10">
+      <div className="md:hidden">
+          <Burger />
+        </div>
+        <div className="logo border-0 md:border-r border-gray-700 p-0 md:pr-10">
           <h2 className="text-xl filter drop-shadow">
             <NextLink href="/">Traveller</NextLink>
           </h2>
         </div>
-        <NextLink href="/courses">
-          <div
-            onMouseEnter={() => setIsOpen(true)}
-            onMouseLeave={() => setIsOpen(false)}
-            className="relative flex flex-row items-center mx-10 cursor-pointer"
+        <div className="hidden md:block">
+          <NextLink href="/courses">
+            <div
+              onMouseEnter={() => setIsOpen(true)}
+              onMouseLeave={() => setIsOpen(false)}
+              className="relative flex flex-row items-center mx-10 cursor-pointer"
+            >
+              <span className="categories mr-2 py-8 text-sm">Categories</span>
+              <DownArrow />
+              {showCategory()}
+            </div>
+          </NextLink>
+        </div>
+        <div className="hidden max-w-md w-full md:block md:max-w-lg">
+          <form
+            onSubmit={handleSubmit}
+            className="relative search-bar w-full h-12 flex items-center px-3 rounded-full flex-row-reverse"
           >
-            <span className="categories mr-2 py-8 text-sm">Categories</span>
-            <DownArrow />
-            {showCategory()}
-          </div>
-        </NextLink>
+            <input
+              className="bg-transparent w-full h-full px-4 focus:outline-none focus-visible:ring-2 text-sm"
+              type="search"
+              value={keyword}
+              onChange={handleChange}
+              placeholder="Search..."
+            />
 
-        <form
-          onSubmit={handleSubmit}
-          className="relative search-bar max-w-xl w-full h-12 flex items-center px-3 rounded-full flex-row-reverse"
-        >
-          <input
-            className="bg-transparent w-full h-full px-4 focus:outline-none focus-visible:ring-2 text-sm"
-            type="search"
-            value={keyword}
-            onChange={handleChange}
-            placeholder="Search..."
-          />
-
-          <button type="submit">
-            <SearchIcon />
-          </button>
-        </form>
-        <div className="flex-grow ml:hidden"></div>
-        <div className="md:hidden">{body}</div>
+            <button type="submit">
+              <SearchIcon />
+            </button>
+          </form>
+        </div>
+        <div className="flex-grow hidden lg:block"></div>
+        <div className="hidden md:block">{body}</div>
+        <div className="md:hidden">
+          <SearchIcon />
+        </div>
+        
       </nav>
     </header>
   );
