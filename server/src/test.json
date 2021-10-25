@@ -1,0 +1,10 @@
+
+
+{"variables.createCourseInput":
+    {
+        "courseName":"NextJS", 
+    "courseCode":"nextjs",
+    "description":"Hi Next",
+    "catId":"frontend"
+    }
+}

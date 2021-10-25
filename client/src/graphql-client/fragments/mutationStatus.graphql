@@ -1,0 +1,13 @@
+
+fragment userMutationStatus on UserMutationResponse{
+    code
+    success
+    message
+}
+
+fragment courseMutationStatus on CourseMutationResponse{
+    code
+    success
+    message
+}
+

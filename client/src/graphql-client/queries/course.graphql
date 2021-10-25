@@ -1,0 +1,5 @@
+query Course($id: ID!) {
+  course(id: $id) {
+    ...courseInfo
+  }
+}

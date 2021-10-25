@@ -1,0 +1,17 @@
+fragment courseInfo on Course {
+  id
+  courseName
+  courseCode
+  description
+  textSnippet
+  view
+  updatedAt
+  image
+  numberOfStudent
+  enrollStatus
+  userId
+  categoryId
+  user {
+    username
+  }
+}

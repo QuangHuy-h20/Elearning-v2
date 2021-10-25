@@ -1,0 +1,7 @@
+server/.env
+server/node_modules
+server/dist
+
+server/images/western-emitter-326400-70dc060706b0.json
+server/ormconfig.json
+*.txt
