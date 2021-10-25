@@ -14,8 +14,18 @@ import { useCheckAuth } from "../utils/useCheckAuth";
 import Link from "next/link";
 
 const schema: yup.SchemaOf<RegisterInput> = yup.object().shape({
-  username: yup.string().required("Username is required").min("username must be greater than 5 characters").max("username must be smaller than 16 characters").default(""),
-  password: yup.string().required("Password is required").default("").min("password must be greater than 5 characters").max("password must be smaller than 16 characters"),
+  username: yup
+    .string()
+    .required("Username is required")
+    .min(5, "username must be greater than 5 characters")
+    .max(16, "username must be smaller than 16 characters")
+    .default(""),
+  password: yup
+    .string()
+    .required("Password is required")
+    .default("")
+    .min(5, "password must be greater than 5 characters")
+    .max(16, "password must be smaller than 16 characters"),
   email: yup.string().email().required("Email is required").default(""),
 });
 
@@ -54,7 +64,9 @@ const Register = () => {
 
     const registerFieldErrors = response.data?.register.errors;
     if (registerFieldErrors) {
-      registerFieldErrors.map(({ field, message }) => setError(field as Field, { message }))
+      registerFieldErrors.map(({ field, message }) =>
+        setError(field as Field, { message })
+      );
     } else if (response.data?.register.user) {
       router.push("/");
     }
