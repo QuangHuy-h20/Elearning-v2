@@ -1,8 +1,10 @@
-import { useMeQuery } from "../../generated/graphql";
+import Image from "next/image";
+import NextLink from "next/link";
+import {
+  useMeQuery
+} from "../../generated/graphql";
 import { useCheckAuth } from "../../utils/useCheckAuth";
 import PageNotFound from "../404";
-import NextLink from "next/link";
-import Image from "next/image";
 const User = () => {
   const { data: authData, loading: authLoading } = useCheckAuth();
 
@@ -80,7 +82,6 @@ const User = () => {
         {/* <div className="list flex">
           {meData.}
         </div> */}
-        
       </div>
     </div>
   );

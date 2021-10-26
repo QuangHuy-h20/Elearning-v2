@@ -41,7 +41,7 @@ const Search = () => {
       {data?.searchListings &&
         data?.searchListings?.map((course) => (
           <NextLink key={course.id} href={`/course/${course.id}`}>
-            <a className="course-item flex flex-wrap border-b mt-12 pb-6">
+            <a className="course-item flex flex-wrap border-b border-gray-500 border-opacity-30 mt-12 pb-6">
               <Image
                 src={course.image.split("/").pop() as string}
                 width={240}

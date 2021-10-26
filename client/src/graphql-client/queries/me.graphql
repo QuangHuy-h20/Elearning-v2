@@ -7,6 +7,7 @@ query Me {
       courseCode
       textSnippet
       view
+      enrollStatus
       user {
         username
       }

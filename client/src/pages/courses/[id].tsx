@@ -27,7 +27,7 @@ const CourseByCategory = () => {
       <h2 className="text-2xl">{categoryName}</h2>
       {data?.coursesByCategory?.map(course => (
          <NextLink key={course.id} href={`/course/${course.id}`}>
-         <a className="course-item flex flex-wrap border-b mt-12 pb-6">
+         <a className="course-item flex flex-wrap border-b border-gray-500 border-opacity-30 mt-12 pb-6">
            <Image src={course.image.split("/").pop() as string} width={240} height={135} alt={course.courseName} />
            <div className="flex flex-col flex-1 ml-4">
              <h1 className="font-bold text-md mb-3 tracking-wide">

@@ -23,9 +23,8 @@ const schema: yup.SchemaOf<RegisterInput> = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .default("")
     .min(5, "password must be greater than 5 characters")
-    .max(16, "password must be smaller than 16 characters"),
+    .max(16, "password must be smaller than 16 characters").default(""),
   email: yup.string().email().required("Email is required").default(""),
 });
 
@@ -87,7 +86,7 @@ const Register = () => {
                 Username
               </label>
               <input
-                className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
                 {...register("username")}
                 placeholder="Enter username"
               />
@@ -101,7 +100,7 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
                 {...register("password")}
                 placeholder="Enter password"
               />
@@ -114,7 +113,7 @@ const Register = () => {
                 Email
               </label>
               <input
-                className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
                 {...register("email")}
                 placeholder="Ex: dev@gmail.com"
               />

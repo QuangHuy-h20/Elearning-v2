@@ -98,7 +98,7 @@ const EditUserProfile = () => {
           <input
             defaultValue={meData?.me?.email}
             type="email"
-            className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+            className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
             {...register("email")}
           />
           {errors.email && (
@@ -112,7 +112,7 @@ const EditUserProfile = () => {
           </label>
           <input
             type="password"
-            className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+            className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
             {...register("password")}
           />
           {errors.password && (
@@ -125,7 +125,7 @@ const EditUserProfile = () => {
           </label>
           <input
             defaultValue={meData?.me?.phoneNumber}
-            className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+            className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
             {...register("phoneNumber")}
           />
           {errors.phoneNumber && (

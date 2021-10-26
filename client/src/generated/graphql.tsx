@@ -441,7 +441,7 @@ export type CoursesQuery = { __typename?: 'Query', courses?: Maybe<{ __typename?
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, username: string, email: string, roleId: string, phoneNumber: string, profilePicture: string, coursesEnrolledByUser?: Maybe<Array<{ __typename?: 'Course', id: number, courseName: string, courseCode: string, textSnippet: string, view: number, image: string, user: { __typename?: 'User', username: string } }>> }> };
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, username: string, email: string, roleId: string, phoneNumber: string, profilePicture: string, coursesEnrolledByUser?: Maybe<Array<{ __typename?: 'Course', id: number, courseName: string, courseCode: string, textSnippet: string, view: number, enrollStatus: number, image: string, user: { __typename?: 'User', username: string } }>> }> };
 
 export type SearchQueryVariables = Exact<{
   searchInput: SearchInput;
@@ -1085,6 +1085,7 @@ export const MeDocument = gql`
       courseCode
       textSnippet
       view
+      enrollStatus
       user {
         username
       }

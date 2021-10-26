@@ -121,7 +121,7 @@ const Navbar = () => {
               <a className="text-sm font-semibold tracking-wide">Login</a>
             </NextLink>
           </li>
-          <li className="sign-up px-6 py-3 ml-3  border rounded-full  text-red-200">
+          <li className="sign-up px-6 py-3 ml-3 border border-gray-500 border-opacity-30 rounded-full text-red-200">
             <NextLink href="/register">
               <a className="text-sm font-semibold tracking-wide">Sign up</a>
             </NextLink>
@@ -132,8 +132,8 @@ const Navbar = () => {
   } else {
     body = (
       <div className="flex justify-between items-center">
-        <div className="relative mx-8">
-          <BellIcon color="currentColor" fill="none" />
+        <div className="relative bg-gray-600 bg-opacity-30 p-2 mx-8 rounded-full">
+          <BellIcon />
           <span className=" top-0 left-0 absolute inline-flex h-2 w-2  rounded-full bg-green-400"></span>
         </div>
         <div
@@ -144,7 +144,7 @@ const Navbar = () => {
           <span className="mr-3 text-sm text-indigo-300">
             {meData.me.username}
           </span>
-          <div className="image-wrapper flex justify-center items-center rounded-full h-14 w-14 ">
+          <div className="image-wrapper flex justify-center items-center border border-gray-500 border-opacity-90 rounded-full h-14 w-14 ">
             {!meData.me.profilePicture ? (
               <span>{meData?.me?.username.charAt(0).toUpperCase()}</span>
             ) : (
@@ -176,13 +176,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className="relative flex justify-between items-center h-20 px-6 md:px-12 lg:px-24 2xl:px-56 ">
+    <header className="relative flex justify-between items-center border-b border-gray-500 border-opacity-30 h-20 px-6 md:px-12 lg:px-24 2xl:px-56 ">
       <nav className="flex justify-between items-center w-full h-full py-5">
       <div className="md:hidden">
           <Burger />
         </div>
         <div className="logo border-0 md:border-r border-gray-700 p-0 md:pr-10">
-          <h2 className="text-xl filter drop-shadow">
+          <h2 className="text-2xl font-semibold">
             <NextLink href="/">Traveller</NextLink>
           </h2>
         </div>
@@ -191,7 +191,7 @@ const Navbar = () => {
             <div
               onMouseEnter={() => setIsOpen(true)}
               onMouseLeave={() => setIsOpen(false)}
-              className="relative flex flex-row items-center mx-10 cursor-pointer"
+              className="relative flex flex-row items-center mx-10 text-opacity-70 cursor-pointer"
             >
               <span className="categories mr-2 py-8 text-sm">Categories</span>
               <DownArrow />
@@ -199,13 +199,13 @@ const Navbar = () => {
             </div>
           </NextLink>
         </div>
-        <div className="hidden max-w-md w-full md:block md:max-w-lg">
+        <div className="hidden bg-gray-600 bg-opacity-30 rounded-full max-w-md w-full md:block md:max-w-lg ">
           <form
             onSubmit={handleSubmit}
-            className="relative search-bar w-full h-12 flex items-center px-3 rounded-full flex-row-reverse"
+            className="relative search-bar w-full h-12 flex items-center px-3 rounded-full text-gray-500 flex-row-reverse"
           >
             <input
-              className="bg-transparent w-full h-full px-4 focus:outline-none focus-visible:ring-2 text-sm"
+              className="bg-transparent border-0 border-opacity-0 w-full h-full px-4 focus:outline-none text-sm"
               type="search"
               value={keyword}
               onChange={handleChange}

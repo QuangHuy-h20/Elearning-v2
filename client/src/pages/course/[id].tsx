@@ -143,12 +143,12 @@ const Course = () => {
                 className="bg-indigo-500 w-full active:bg-indigo-600 my-3 font-bold text-base px-8 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
                 onClick={
-                  data.course.enrollStatus === EnrollStatusValue.Enroll
+                  data!.course!.enrollStatus === EnrollStatusValue!.Enroll
                     ? handleUnEnroll
                     : handleEnroll
                 }
               >
-                {data.course.enrollStatus === EnrollStatusValue.Enroll
+                {data!.course!.enrollStatus === EnrollStatusValue!.Enroll
                   ? "Unenroll"
                   : "Enroll"}
               </button>

@@ -81,7 +81,7 @@ const Login = () => {
                 Username
               </label>
               <input
-                className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30 p-3 my-2 border border-gray-500 border-opacity-30 rounded-xl focus:outline-none focus-visible:ring-2"
                 {...register("usernameOrEmail")}
                 placeholder="Enter username or email"
               />
@@ -97,7 +97,7 @@ const Login = () => {
               </label>
               <input
                 type="password"
-                className="bg-transparent p-3 my-2 border rounded-lg focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
                 {...register("password")}
                 placeholder="Enter password"
               />
@@ -105,7 +105,7 @@ const Login = () => {
                 <p className="text-red-500 ml-3">{errors.password?.message}</p>
               )}
             </div>
-            <div className="flex justify-end my-1">
+            <div className="flex justify-end my-3">
               <Link href="/forgot-password">
                 <a >Forgot password?</a>
               </Link>
