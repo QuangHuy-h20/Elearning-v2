@@ -16,8 +16,6 @@ gc.getBuckets().then((x) => console.log(x));
 
 const uploadFileBucket = gc.bucket("upload-image-elearning");
 
-// '{"query":"mutation UploadImage($file: Upload!) {\n singleUpload(file: $file)\n}"}'
-
 @Resolver()
 export class UploadImageResolver {
 

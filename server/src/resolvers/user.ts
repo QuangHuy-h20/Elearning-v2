@@ -30,23 +30,21 @@ import { Course } from "../entites/Course";
 //setup google cloud
 const uploadFileBucket = gc.bucket("upload-image-elearning");
 
-@Resolver(_of => User)
+@Resolver((_of) => User)
 export class UserResolver {
-
   //=======================FIELD RESOLVER=======================
 
-  @FieldResolver(_return => [Course], { nullable: true})
+  @FieldResolver((_return) => [Course], { nullable: true })
   async coursesEnrolledByUser(
     @Root() root: User,
     @Ctx() { dataLoaders: { courseLoader } }: Context
-  ){
+  ) {
     try {
       return await courseLoader.load(root.id);
     } catch (error) {
-      return null
+      return null;
     }
   }
-
 
   //=============================QUERY==========================
 
@@ -347,28 +345,21 @@ export class UserResolver {
     }
   }
 
-  //Mutation for update user
-
-  @Mutation((_return) => UserMutationResponse)
-  async updatedUser(
-    @Arg("updateUserInput")
-    { id, password, email, phoneNumber }: UpdateUserInput,
+  //Mutation for update user profile picture
+  @Mutation(() => Boolean)
+  async uploadUserProfilePicture(
+    @Arg("id", (_type) => ID) id: number,
     @Arg("file", () => GraphQLUpload)
     { createReadStream, filename }: FileUpload
-  ): Promise<UserMutationResponse> {
+  ): Promise<Boolean> {
     let newImage = "";
+
     try {
       const existingUser = await User.findOne(id);
 
-      if (!existingUser)
-        return {
-          code: 400,
-          success: false,
-          message: "User not found",
-        };
-
-      //hashed password
-      const hashedPassword = await argon2.hash(password);
+      if (!existingUser) {
+        return false;
+      }
 
       new Promise((reject) =>
         createReadStream()
@@ -386,23 +377,88 @@ export class UserResolver {
               .then((e) => {
                 newImage = `https://storage.cloud.google.com/upload-image-elearning/${e[0].object}`;
 
-                const existingImage = existingUser.profilePicture?.split("/").pop();
+                const existingImage = existingUser.profilePicture
+                  ?.split("/")
+                  .pop();
 
-                if(newImage !== existingUser.profilePicture){
+                if (newImage !== existingUser.profilePicture) {
                   uploadFileBucket.file(existingImage as string).delete();
                   existingUser.profilePicture = newImage;
                 }
-                
+
                 existingUser.profilePicture = newImage;
-                existingUser.email = email;
-                existingUser.password = hashedPassword;
-                existingUser.phoneNumber = phoneNumber;
                 existingUser.save();
               })
 
               .catch((error) => console.log(error.message))
           )
       );
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  //Mutation for update user
+
+  @Mutation((_return) => UserMutationResponse)
+  async updatedUser(
+    @Arg("updateUserInput")
+    { id, password, email, phoneNumber }: UpdateUserInput
+  ): // @Arg("file", () => GraphQLUpload)
+  // { createReadStream, filename }: FileUpload
+  Promise<UserMutationResponse> {
+    // let newImage = "";
+    try {
+      const existingUser = await User.findOne(id);
+
+      if (!existingUser)
+        return {
+          code: 400,
+          success: false,
+          message: "User not found",
+        };
+
+      //hashed password
+      const hashedPassword = await argon2.hash(password);
+
+      existingUser.email = email;
+      existingUser.password = hashedPassword;
+      existingUser.phoneNumber = phoneNumber;
+      existingUser.save();
+
+      // new Promise((reject) =>
+      //   createReadStream()
+      //     .pipe(
+      //       uploadFileBucket.file(filename).createWriteStream({
+      //         resumable: false,
+      //         gzip: true,
+      //       })
+      //     )
+      //     .on("error", reject)
+      //     .on("finish", () =>
+      //       uploadFileBucket
+      //         .file(filename)
+      //         .makePublic()
+      //         .then((e) => {
+      //           newImage = `https://storage.cloud.google.com/upload-image-elearning/${e[0].object}`;
+
+      //           const existingImage = existingUser.profilePicture
+      //             ?.split("/")
+      //             .pop();
+
+      //           if (newImage !== existingUser.profilePicture) {
+      //             uploadFileBucket.file(existingImage as string).delete();
+      //             existingUser.profilePicture = newImage;
+      //           }
+
+      //           existingUser.profilePicture = newImage;
+
+      //         })
+
+      //         .catch((error) => console.log(error.message))
+      //     )
+      // );
 
       //All good
       return {
@@ -438,9 +494,11 @@ export class UserResolver {
 
     await User.delete({ id });
 
-    const lastUrl = existingUser.profilePicture!.split("/");
-    const filename = lastUrl[lastUrl.length - 1];
-    await uploadFileBucket.file(filename).delete();
+    if(existingUser.profilePicture){
+      const lastUrl = existingUser.profilePicture!.split("/");
+      const filename = lastUrl[lastUrl.length - 1];
+      await uploadFileBucket.file(filename).delete();
+    }
 
     return {
       code: 200,
