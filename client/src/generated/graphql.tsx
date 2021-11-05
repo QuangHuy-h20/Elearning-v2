@@ -124,6 +124,7 @@ export type Mutation = {
   singleUpload: Scalars['Boolean'];
   updateCourse: CourseMutationResponse;
   updatedUser: UserMutationResponse;
+  uploadUserProfilePicture: Scalars['Boolean'];
 };
 
 
@@ -193,8 +194,13 @@ export type MutationUpdateCourseArgs = {
 
 
 export type MutationUpdatedUserArgs = {
-  file: Scalars['Upload'];
   updateUserInput: UpdateUserInput;
+};
+
+
+export type MutationUploadUserProfilePictureArgs = {
+  file: Scalars['Upload'];
+  id: Scalars['ID'];
 };
 
 export type PaginatedCourses = {
@@ -389,7 +395,6 @@ export type UpdateCourseMutationVariables = Exact<{
 export type UpdateCourseMutation = { __typename?: 'Mutation', updateCourse: { __typename?: 'CourseMutationResponse', code: number, success: boolean, message?: Maybe<string>, course?: Maybe<{ __typename?: 'Course', id: number, courseName: string, courseCode: string, description: string, textSnippet: string, view: number, updatedAt: any, image: string, numberOfStudent: number, enrollStatus: number, userId: number, categoryId: string, user: { __typename?: 'User', username: string } }>, errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>> } };
 
 export type UpdateUserMutationVariables = Exact<{
-  file: Scalars['Upload'];
   updateUserInput: UpdateUserInput;
 }>;
 
@@ -402,6 +407,14 @@ export type UploadFileMutationVariables = Exact<{
 
 
 export type UploadFileMutation = { __typename?: 'Mutation', singleUpload: boolean };
+
+export type UploadUserProfilePictureMutationVariables = Exact<{
+  id: Scalars['ID'];
+  file: Scalars['Upload'];
+}>;
+
+
+export type UploadUserProfilePictureMutation = { __typename?: 'Mutation', uploadUserProfilePicture: boolean };
 
 export type CourseCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -827,8 +840,8 @@ export type UpdateCourseMutationHookResult = ReturnType<typeof useUpdateCourseMu
 export type UpdateCourseMutationResult = Apollo.MutationResult<UpdateCourseMutation>;
 export type UpdateCourseMutationOptions = Apollo.BaseMutationOptions<UpdateCourseMutation, UpdateCourseMutationVariables>;
 export const UpdateUserDocument = gql`
-    mutation UpdateUser($file: Upload!, $updateUserInput: UpdateUserInput!) {
-  updatedUser(updateUserInput: $updateUserInput, file: $file) {
+    mutation UpdateUser($updateUserInput: UpdateUserInput!) {
+  updatedUser(updateUserInput: $updateUserInput) {
     ...userMutationResponse
   }
 }
@@ -848,7 +861,6 @@ export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, U
  * @example
  * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
  *   variables: {
- *      file: // value for 'file'
  *      updateUserInput: // value for 'updateUserInput'
  *   },
  * });
@@ -891,6 +903,38 @@ export function useUploadFileMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
 export type UploadFileMutationResult = Apollo.MutationResult<UploadFileMutation>;
 export type UploadFileMutationOptions = Apollo.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
+export const UploadUserProfilePictureDocument = gql`
+    mutation UploadUserProfilePicture($id: ID!, $file: Upload!) {
+  uploadUserProfilePicture(file: $file, id: $id)
+}
+    `;
+export type UploadUserProfilePictureMutationFn = Apollo.MutationFunction<UploadUserProfilePictureMutation, UploadUserProfilePictureMutationVariables>;
+
+/**
+ * __useUploadUserProfilePictureMutation__
+ *
+ * To run a mutation, you first call `useUploadUserProfilePictureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadUserProfilePictureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadUserProfilePictureMutation, { data, loading, error }] = useUploadUserProfilePictureMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useUploadUserProfilePictureMutation(baseOptions?: Apollo.MutationHookOptions<UploadUserProfilePictureMutation, UploadUserProfilePictureMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadUserProfilePictureMutation, UploadUserProfilePictureMutationVariables>(UploadUserProfilePictureDocument, options);
+      }
+export type UploadUserProfilePictureMutationHookResult = ReturnType<typeof useUploadUserProfilePictureMutation>;
+export type UploadUserProfilePictureMutationResult = Apollo.MutationResult<UploadUserProfilePictureMutation>;
+export type UploadUserProfilePictureMutationOptions = Apollo.BaseMutationOptions<UploadUserProfilePictureMutation, UploadUserProfilePictureMutationVariables>;
 export const CourseCategoryDocument = gql`
     query CourseCategory {
   categories {

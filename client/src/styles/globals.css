@@ -9,6 +9,7 @@ body {
 	color: #fff;
 }
 
+
 .banner {
 	height: 650px;
 }
@@ -24,8 +25,8 @@ button:hover {
 	justify-content: center;
 	line-height: 0.001;
 	align-items: center;
-	width: 11rem;
-	height: 11rem;
+	width: 12rem;
+	height: 12rem;
 	z-index: 10;
 	top: 0;
 	border-radius: 50%;
@@ -46,6 +47,10 @@ button:hover {
 
 .edit-user:hover::after {
 	opacity: 0.75;
+}
+
+.course-item:last-child{
+	border-bottom: none !important;
 }
 
 .loader {

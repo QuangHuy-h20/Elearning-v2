@@ -24,7 +24,8 @@ const schema: yup.SchemaOf<RegisterInput> = yup.object().shape({
     .string()
     .required("Password is required")
     .min(5, "password must be greater than 5 characters")
-    .max(16, "password must be smaller than 16 characters").default(""),
+    .max(16, "password must be smaller than 16 characters")
+    .default(""),
   email: yup.string().email().required("Email is required").default(""),
 });
 
@@ -80,13 +81,13 @@ const Register = () => {
       ) : (
         <Wrapper>
           <h2 className="text-4xl text-center my-3">Register</h2>
-          <form className="w-2/5" onSubmit={handleSubmit(onSubmit)}>
+          <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group flex flex-col py-2">
               <label className="pl-3 text-md" htmlFor="username">
                 Username
               </label>
               <input
-                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30  rounded-xl p-3 my-2 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
                 {...register("username")}
                 placeholder="Enter username"
               />
@@ -100,7 +101,7 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30  rounded-xl p-3 my-2 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
                 {...register("password")}
                 placeholder="Enter password"
               />
@@ -113,7 +114,7 @@ const Register = () => {
                 Email
               </label>
               <input
-                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30  rounded-xl p-3 my-2 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
                 {...register("email")}
                 placeholder="Ex: dev@gmail.com"
               />
@@ -121,7 +122,7 @@ const Register = () => {
                 <p className="text-red-500 ml-3">{errors.email?.message}</p>
               )}
             </div>
-            <div className="form-group">
+            <div className="form-group flex justify-center">
               <button
                 type="submit"
                 className="p-3 mt-6 w-full rounded-lg bg-red-400 hover:bg-red-500"
@@ -132,14 +133,14 @@ const Register = () => {
                     <Spinner />
                   </div>
                 ) : (
-                  <span className="cursor-pointer text-xl">Submit</span>
+                  <span className="cursor-pointer text-xl">Sign up</span>
                 )}
               </button>
             </div>
             <div className="flex flex-col justify-center items-center mt-4">
               <span className="text-gray-400">or</span>
               <Link href="/login">
-                <a className="text-blue-400 mt-3">Already have an account?</a>
+                <a className="text-indigo-300 transition duration-300 hover:text-indigo-400 mt-3">Already have an account?</a>
               </Link>
             </div>
           </form>

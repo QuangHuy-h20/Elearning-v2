@@ -10,7 +10,6 @@ import { NetworkStatus } from "@apollo/client";
 export const limit = 3;
 
 const Courses = () => {
-
   const { data, loading, fetchMore, networkStatus } = useCoursesQuery({
     variables: { limit },
     notifyOnNetworkStatusChange: true,
@@ -25,7 +24,7 @@ const Courses = () => {
   };
 
   return (
-    <section >
+    <section>
       <h2 className="text-2xl">All courses</h2>
       {loading && !loadingMoreCourses ? (
         <Spinner />
@@ -34,7 +33,12 @@ const Courses = () => {
           {data?.courses?.paginatedCourses.map((course) => (
             <NextLink key={course.id} href={`/course/${course.id}`}>
               <a className="course-item flex flex-wrap border-b border-gray-500 border-opacity-30 last:border-b-0 mt-12 pb-6">
-                <Image src={course.image.split("/").pop() as string} width={240} height={135} alt={course.courseName} />
+                <Image
+                  src={course.image.split("/").pop() as string}
+                  width={240}
+                  height={135}
+                  alt={course.courseName}
+                />
                 <div className="flex flex-col flex-1 ml-4">
                   <h1 className="font-bold text-md mb-3 tracking-wide">
                     {course.courseName}
@@ -59,19 +63,22 @@ const Courses = () => {
 
           {data?.courses?.hasMore && (
             <div className="flex justify-center">
-              <button
-                className="flex justify-between items-center mt-10 flex-row bg-blue-400 text-white  font-semibold text-sm pr-4 pl-2 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                onClick={loadMoreCourses}
-              >
-                {loadingMoreCourses ? (
+              {loadingMoreCourses ? (
+                <div className="my-4">
                   <Spinner />
-                ) : (
+
+                </div>
+              ) : (
+                <button
+                  className="flex justify-between items-center mt-10 flex-row bg-blue-400 text-white  font-semibold text-sm pr-4 pl-2 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  onClick={loadMoreCourses}
+                >
                   <>
                     <DownArrowSmallIcon />
                     <span className="ml-2 text-md">Show more</span>
                   </>
-                )}
-              </button>
+                </button>
+              )}
             </div>
           )}
         </>

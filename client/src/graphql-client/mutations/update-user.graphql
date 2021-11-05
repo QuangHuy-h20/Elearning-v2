@@ -1,5 +1,9 @@
-mutation UpdateUser($file: Upload!, $updateUserInput: UpdateUserInput!) {
-  updatedUser(updateUserInput: $updateUserInput, file: $file) {
+mutation UpdateUser(
+  # $file: Upload!, 
+$updateUserInput: UpdateUserInput!) {
+  updatedUser(updateUserInput: $updateUserInput, 
+  # file: $file
+  ) {
     ...userMutationResponse
   }
 }

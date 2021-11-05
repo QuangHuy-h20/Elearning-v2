@@ -118,7 +118,7 @@ const CreateCourse = () => {
   return (
     <Wrapper>
       <h2 className="text-4xl text-center my-3">Create course</h2>
-      <form className="w-2/5" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group flex flex-col py-2">
           <label className="pl-3 text-md" htmlFor="courseName">
             Course name

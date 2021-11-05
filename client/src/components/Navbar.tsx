@@ -59,7 +59,7 @@ const Navbar = () => {
     <Transition
       as="div"
       show={isOpen}
-      className="absolute z-50 top-full w-60 h-38 p-1 bg-gray-600 border border-white rounded-lg bg-opacity-30 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
+      className="absolute z-50 top-full w-60 h-38 p-1 bg-gray-800 border border-white rounded-lg bg-opacity-70 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
       enter="ease-out duration-300"
       enterFrom="opacity-0"
       enterTo="opacity-100"
@@ -67,13 +67,15 @@ const Navbar = () => {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <ul className=" px-4 my-2 h-full">
+      <ul className="m-2 h-full">
         {catData?.categories?.map((category) => (
-          <li key={category.id} className="relative my-6 text-sm">
+          <>
+          <li key={category.id} className="relative py-3 text-sm hover:bg-gray-700 hover:bg-opacity-90 hover:border rounded-lg">
             <NextLink href={`/courses/${category.id}`}>
-              {category.categoryName}
+              <a className="px-2">{category.categoryName}</a>
             </NextLink>
           </li>
+          </>
         ))}
       </ul>
     </Transition>
@@ -83,7 +85,7 @@ const Navbar = () => {
     <Transition
       as="div"
       show={isShow}
-      className="absolute z-50 top-full right-0 w-40 h-38 p-1 bg-gray-600 border border-white rounded-lg bg-opacity-30 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
+      className="absolute z-50 top-full right-0 w-40 h-38 p-1 bg-gray-800 border border-white rounded-lg bg-opacity-70 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
       enter="ease-out duration-300"
       enterFrom="opacity-0"
       enterTo="opacity-100"
@@ -91,15 +93,19 @@ const Navbar = () => {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <ul className=" px-4 my-2 h-full text-sm">
-        <li key="account" className="relative py-3">
-          <NextLink href="/user">Account</NextLink>
+      <ul className="m-2 h-full text-sm">
+        <li key="account" className="relative py-3 text-sm hover:bg-gray-500 hover:border rounded-lg">
+          <NextLink href="/user">
+          <a className="px-2">Account</a>
+          </NextLink>
         </li>
-        <li key="edit" className="relative py-3">
-          <NextLink href="/user/edit-profile">Edit profile</NextLink>
+        <li key="edit" className="relative py-3 text-sm hover:bg-gray-500 hover:border rounded-lg">
+          <NextLink href="/user/edit-profile">
+          <a className="px-2">Edit profile</a>
+          </NextLink>
         </li>
-        <li key="logout" className="relative py-3">
-          <button onClick={logoutUser}>Logout</button>
+        <li key="logout" className="relative py-3 text-sm hover:bg-gray-500 hover:border rounded-lg">
+          <button className="px-2" onClick={logoutUser}>Logout</button>
         </li>
       </ul>
     </Transition>
@@ -115,8 +121,8 @@ const Navbar = () => {
   else if (!meData?.me) {
     body = (
       <>
-        <ul className="flex justify-between item-center">
-          <li className="p-3 mr-3">
+        <ul className="flex justify-between">
+          <li className="p-3 mr-3 md:mr-0">
             <NextLink href="/login">
               <a className="text-sm font-semibold tracking-wide">Login</a>
             </NextLink>
@@ -132,8 +138,8 @@ const Navbar = () => {
   } else {
     body = (
       <div className="flex justify-between items-center">
-        <div className="relative bg-gray-600 bg-opacity-30 p-2 mx-8 rounded-full">
-          <BellIcon />
+        <div className="relative bg-gray-600 bg-opacity-30 p-2 mx-8 rounded-full cursor-pointer hover:bg-gray-500">
+          <BellIcon color="#fff" fill="#fff"/>
           <span className=" top-0 left-0 absolute inline-flex h-2 w-2  rounded-full bg-green-400"></span>
         </div>
         <div
@@ -176,30 +182,30 @@ const Navbar = () => {
   };
 
   return (
-    <header className="relative flex justify-between items-center border-b border-gray-500 border-opacity-30 h-20 px-6 md:px-12 lg:px-24 2xl:px-56 ">
+    <header className="relative flex justify-between items-center  border-gray-600 border-b border-opacity-60 h-20 px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-56">
       <nav className="flex justify-between items-center w-full h-full py-5">
-      <div className="md:hidden">
+      <div className="lg:hidden">
           <Burger />
         </div>
-        <div className="logo border-0 md:border-r border-gray-700 p-0 md:pr-10">
+        <div className="logo border-0 lg:border-r border-gray-700 p-0 md:pr-2 lg:pr-10">
           <h2 className="text-2xl font-semibold">
             <NextLink href="/">Traveller</NextLink>
           </h2>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <NextLink href="/courses">
             <div
               onMouseEnter={() => setIsOpen(true)}
               onMouseLeave={() => setIsOpen(false)}
-              className="relative flex flex-row items-center mx-10 text-opacity-70 cursor-pointer"
+              className="relative flex flex-row items-center xl:mx-10 lg:mx-6 cursor-pointer"
             >
-              <span className="categories mr-2 py-8 text-sm">Categories</span>
+              <span className="categories mr-2 py-8 text-white text-opacity-80 text-sm">Categories</span>
               <DownArrow />
               {showCategory()}
             </div>
           </NextLink>
         </div>
-        <div className="hidden bg-gray-600 bg-opacity-30 rounded-full max-w-md w-full md:block md:max-w-lg ">
+        <div className="hidden bg-gray-600 bg-opacity-30 rounded-full max-w-md w-full lg:block md:max-w-sm xl:max-w-lg ">
           <form
             onSubmit={handleSubmit}
             className="relative search-bar w-full h-12 flex items-center px-3 rounded-full text-gray-500 flex-row-reverse"
@@ -218,8 +224,8 @@ const Navbar = () => {
           </form>
         </div>
         <div className="flex-grow hidden lg:block"></div>
-        <div className="hidden md:block">{body}</div>
-        <div className="md:hidden">
+        <div className="hidden lg:block">{body}</div>
+        <div className="lg:hidden">
           <SearchIcon />
         </div>
         

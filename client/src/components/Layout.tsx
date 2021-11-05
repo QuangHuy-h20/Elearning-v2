@@ -7,10 +7,10 @@ interface ILayoutProps {
 
 const Layout = ({ children }: ILayoutProps) => {
   return (
-    <>
+    <div className="relative">
       <Navbar />
       <section className="px-56 mt-12 max-w-full h-full">{children}</section>
-    </>
+    </div>
   );
 };
 

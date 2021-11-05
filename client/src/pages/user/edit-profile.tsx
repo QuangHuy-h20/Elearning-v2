@@ -1,8 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { useDropzone } from "react-dropzone";
-import { useCallback, useState } from "react";
 import {
   UpdateUserInput,
   useMeQuery,
@@ -19,7 +17,12 @@ type IProfileInputs = Omit<UpdateUserInput, "id">;
 
 const schema: yup.SchemaOf<IProfileInputs> = yup.object().shape({
   email: yup.string().email().required().default(""),
-  password: yup.string().notRequired().default("").min(5, "password must be greater than 5 characters").max(16, "password must be smaller than 16 characters"),
+  password: yup
+    .string()
+    .notRequired()
+    .default("")
+    .min(5, "password must be greater than 5 characters")
+    .max(16, "password must be smaller than 16 characters"),
   phoneNumber: yup.string().notRequired().default(""),
 });
 
@@ -28,11 +31,7 @@ const EditUserProfile = () => {
 
   const { data: meData, loading: meLoading } = useMeQuery();
 
-  const [fileToUpload, setFileToUpload] = useState<File>([] as any);
-
   const [updatedUser, { data }] = useUpdateUserMutation();
-
-  const [imageSrc, setImageSrc] = useState(meData?.me?.profilePicture);
 
   const router = useRouter();
 
@@ -44,35 +43,13 @@ const EditUserProfile = () => {
     resolver: yupResolver(schema),
   });
 
-  const readFile = (file: File) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => resolve(reader.result), false);
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const onFileChange = async (e: any) => {
-    const file = e;
-    let imageUrl: any = await readFile(file);
-    setImageSrc(imageUrl);
-  };
-
-  const onDrop = useCallback(([file]) => {
-    setFileToUpload(file);
-    onFileChange(file);
-  }, []);
-
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-  const onSubmit = async (values: Omit<UpdateUserInput, "id">) => {
+  const onSubmit = async (values: IProfileInputs) => {
     await updatedUser({
       variables: {
         updateUserInput: { ...values, id: authData!.me!.id },
-        file: fileToUpload,
       },
     });
-      router.push("/user");
+    router.push("/user");
   };
 
   if (authLoading) {
@@ -90,7 +67,7 @@ const EditUserProfile = () => {
   return (
     <Wrapper>
       <h2 className="text-4xl text-center my-3">Update user profile</h2>
-      <form className="w-2/5" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group flex flex-col py-2">
           <label className="pl-3 text-md" htmlFor="email">
             Email
@@ -98,7 +75,7 @@ const EditUserProfile = () => {
           <input
             defaultValue={meData?.me?.email}
             type="email"
-            className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
+            className="bg-gray-600 bg-opacity-30 rounded-md p-3 my-2 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
             {...register("email")}
           />
           {errors.email && (
@@ -112,7 +89,7 @@ const EditUserProfile = () => {
           </label>
           <input
             type="password"
-            className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
+            className="bg-gray-600 bg-opacity-30 rounded-md p-3 my-2 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
             {...register("password")}
           />
           {errors.password && (
@@ -125,38 +102,17 @@ const EditUserProfile = () => {
           </label>
           <input
             defaultValue={meData?.me?.phoneNumber}
-            className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
+            className="bg-gray-600 bg-opacity-30 rounded-md p-3 my-2 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
             {...register("phoneNumber")}
           />
           {errors.phoneNumber && (
             <p className="text-red-500 ml-3">{errors.phoneNumber?.message}</p>
           )}
         </div>
-
-        <div className="form-group py-2">
-          <label className="pl-3 text-md" htmlFor="uploadFile">
-            Upload avatar
-          </label>
-          <div
-            {...getRootProps({
-              className: "border border-dashed py-6 px-3 my-2",
-            })}
-          >
-            <input name="uploadFile" {...getInputProps()} />
-            <p className="text-center">
-              Drag 'n' drop some files here, or click to select files
-            </p>
-          </div>
-
-          <div className="form-group flex justify-center py-3">
-            <img className="w-64 h-34" src={imageSrc} alt="" />
-          </div>
-        </div>
-
-        <div className="form-group flex justify-center">
+        <div className="form-group flex justify-center mt-6">
           <button
             type="submit"
-            className="p-3 mt-4 w-full rounded-lg bg-red-400 hover:bg-red-500"
+            className="p-3 w-1/2 rounded-lg bg-red-400 hover:bg-red-500"
             disabled={isSubmitting}
           >
             {isSubmitting && isSubmitting ? (

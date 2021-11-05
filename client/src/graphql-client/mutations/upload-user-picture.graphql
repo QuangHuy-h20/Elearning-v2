@@ -1,0 +1,3 @@
+mutation UploadUserProfilePicture($id: ID!, $file: Upload!){
+  uploadUserProfilePicture(file: $file, id:$id)
+}

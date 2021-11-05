@@ -75,13 +75,13 @@ const Login = () => {
       ) : (
         <Wrapper>
           <h2 className="text-4xl text-center my-3">Login</h2>
-          <form className="w-2/5" onSubmit={handleSubmit(onSubmit)}>
+          <form className="w-1/3" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group flex flex-col py-2">
               <label className="pl-3 text-md" htmlFor="usernameOrEmail">
                 Username
               </label>
               <input
-                className="bg-gray-600 bg-opacity-30 p-3 my-2 border border-gray-500 border-opacity-30 rounded-xl focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30 p-3 my-2  rounded-xl focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
                 {...register("usernameOrEmail")}
                 placeholder="Enter username or email"
               />
@@ -97,7 +97,7 @@ const Login = () => {
               </label>
               <input
                 type="password"
-                className="bg-gray-600 bg-opacity-30 border border-gray-500 border-opacity-30 rounded-xl p-3 my-2 focus:outline-none focus-visible:ring-2"
+                className="bg-gray-600 bg-opacity-30  rounded-xl p-3 my-2 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:outline-none"
                 {...register("password")}
                 placeholder="Enter password"
               />
@@ -121,14 +121,14 @@ const Login = () => {
                     <Spinner />
                   </div>
                 ) : (
-                  <span className="cursor-pointer text-xl">Submit</span>
+                  <span className="cursor-pointer text-xl">Login</span>
                 )}
               </button>
             </div>
             <div className="flex flex-col justify-center items-center mt-4">
               <span className="text-gray-400">or</span>
               <Link href="/register">
-                <a className="text-blue-400 mt-3">Create new account</a>
+                <a className="font-semibold mt-3 text-indigo-300 transition duration-300 hover:text-indigo-400 ">Create new account</a>
               </Link>
             </div>
           </form>

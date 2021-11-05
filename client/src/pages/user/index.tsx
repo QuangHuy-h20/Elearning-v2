@@ -1,14 +1,69 @@
 import Image from "next/image";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { ChangeEvent, useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import {
-  useMeQuery
+  useMeQuery,
+  useUploadUserProfilePictureMutation,
 } from "../../generated/graphql";
+import CancelIcon from "../../icons/CancelIcon";
+import CheckIcon from "../../icons/CheckIcon";
 import { useCheckAuth } from "../../utils/useCheckAuth";
 import PageNotFound from "../404";
+
 const User = () => {
   const { data: authData, loading: authLoading } = useCheckAuth();
 
   const { data: meData, loading: meLoading } = useMeQuery();
+
+  const [uploadUserProfilePicture] = useUploadUserProfilePictureMutation();
+
+  const [fileToUpload, setFileToUpload] = useState<File>([] as any);
+
+  const [isUpload, setIsUpload] = useState(false);
+
+  const [imageSrc, setImageSrc] = useState("");
+
+  const router = useRouter();
+
+  const readFile = (file: File) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const onFileChange = async (e: any) => {
+    const file = e;
+    let imageUrl: any = await readFile(file);
+    setImageSrc(imageUrl);
+  };
+
+  const onDrop = useCallback(([file]) => {
+    setFileToUpload(file);
+    setIsUpload(true);
+    onFileChange(file);
+  }, []);
+
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await uploadUserProfilePicture({
+      variables: {
+        id: authData!.me!.id as string,
+        file: fileToUpload,
+      },
+    });
+    router.reload();
+  };
+
+  const handleCancel = () => {
+    setIsUpload(false);
+    setImageSrc(meData?.me?.profilePicture as string);
+  };
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   if (authLoading) {
     return (
@@ -23,11 +78,16 @@ const User = () => {
   }
 
   return (
-    <div className=" my-10 bg-gray-700  border-white rounded-lg bg-opacity-20 backdrop-filter backdrop-blur- border-opacity-10 justify-center border ">
+    <div className=" my-10 bg-gray-700  border-white rounded-lg bg-opacity-20 backdrop-filter backdrop-blur border-opacity-10 justify-center border ">
       <div className="flex flex-col items-center my-8">
-        <div className="relative h-44 w-44 cursor-pointer">
-          <NextLink href="/user/edit-profile">
-            <a className="edit-user w-full h-full object-cover rounded-full">
+        <div className="relative h-48 w-48 cursor-pointer">
+          <form onSubmit={handleSubmit} className="w-full h-full">
+            <div
+              {...getRootProps({
+                className: "edit-user w-full h-full object-cover rounded-full",
+              })}
+            >
+              <input name="uploadFile" {...getInputProps()} />
               {!meData?.me?.profilePicture ? (
                 <div className="flex justify-center items-center w-full border border-dashed rounded-full border-opacity-20 h-full">
                   <h1 className="text-4xl">
@@ -37,12 +97,31 @@ const User = () => {
               ) : (
                 <img
                   className="w-full h-full object-cover rounded-full"
-                  src={meData?.me?.profilePicture}
+                  src={imageSrc === "" ? meData?.me?.profilePicture : imageSrc}
                   alt=""
                 />
               )}
-            </a>
-          </NextLink>
+            </div>
+            {isUpload ? (
+              <div className="flex justify-between w-full my-3 text-white">
+                <button
+                  onClick={handleCancel}
+                  className="flex items-center p-2 bg-red-400 hover:bg-red-400 rounded-md bg-opacity-80"
+                >
+                   <span className="mr-1 text-sm">Cancel</span><CancelIcon />
+                </button>
+                <button
+                  type="submit"
+                  className="flex items-center p-2 bg-green-200 hover:bg-green-400 rounded-md bg-opacity-80"
+                >
+                  
+                  <span className="mr-1 text-sm">Change</span><CheckIcon />
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+          </form>
         </div>
 
         <div className="my-10 flex flex-col">
@@ -52,7 +131,7 @@ const User = () => {
           <p className="mb-3">Email: {meData?.me?.email}</p>
           <p className="mb-3">Phone number: {meData?.me?.phoneNumber}</p>
         </div>
-        <h3 className="text-xl">Courses you have enrolled</h3>
+        <h3 className="text-xl">Courses you have enrolled:</h3>
         <ul className="grid grid-cols-4 gap-6 px-10 mt-10">
           {meData?.me?.coursesEnrolledByUser?.map((course) => (
             <li key={course.id} className="flex flex-col w-full">
