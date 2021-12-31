@@ -1,0 +1,5 @@
+mutation Enroll($enrollStatusValue: EnrollStatus!, $courseId: Int!) {
+  enroll(enrollStatusValue: $enrollStatusValue, courseId: $courseId) {
+    ...courseMutationResponse
+  }
+}

@@ -1,0 +1,17 @@
+query Me {
+  me {
+    ...userInfo
+    coursesEnrolledByUser {
+      id
+      courseName
+      courseCode
+      textSnippet
+      view
+      enrollStatus
+      user {
+        username
+      }
+      image
+    }
+  }
+}

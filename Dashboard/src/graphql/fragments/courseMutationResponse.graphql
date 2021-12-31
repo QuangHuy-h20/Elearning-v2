@@ -1,0 +1,9 @@
+fragment courseMutationResponse on CourseMutationResponse {
+  ...courseMutationStatus
+  course {
+    ...courseInfo
+  }
+  errors {
+    ...fieldError
+  }
+}

@@ -1,0 +1,29 @@
+[
+    {
+
+        "displayName": "Dashboard",
+        "route": "/",
+        "icon": "bx bx-category-alt"
+    },
+    {
+        "displayName": "Users",
+        "route": "/users",
+        "icon": "bx bx-user-pin"
+    },
+    {
+        "displayName": "Courses",
+        "route": "/courses",
+        "icon": "bx bx-package"
+    },
+    {
+        "displayName": "Categories",
+        "route": "/categories",
+        "icon": "bx bx-list-ol"
+    },
+    {
+        "displayName": "Settings",
+        "route": "/settings",
+        "icon": "bx bx-cog"
+    }
+
+]

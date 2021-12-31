@@ -1,0 +1,15 @@
+query Users{
+  users{
+    id
+    username
+    email
+    roleId
+    phoneNumber
+    profilePicture
+    coursesEnrolledByUser{
+      courseName
+    }
+    count
+    createdAt
+  }
+}

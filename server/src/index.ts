@@ -3,7 +3,7 @@ import "reflect-metadata";
 import express from "express";
 import mongoose from "mongoose";
 import { createConnection } from "typeorm";
-// import path from "path";
+import path from "path";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { User } from "./entites/User";
@@ -28,16 +28,33 @@ import { buildDataLoaders } from "./utils/dataLoader";
 const main = async () => {
   const connection = await createConnection({
     type: "postgres",
-    database: "e-learning",
-    username: process.env.DB_USERNAME_DEV,
-    password: process.env.DB_PASSWORD_DEV,
+    ...(__prod__
+      ? { url: process.env.DATABASE_URL }
+      : {
+          database: "e-learning",
+          username: process.env.DB_USERNAME,
+          password: process.env.DB_PASSWORD,
+        }),
+
     logging: true,
-    synchronize: true,
+    ...(__prod__
+      ? {
+          extra: {
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          },
+          ssl: true,
+        }
+      : {}),
+
+    ...(__prod__ ? {} : { synchronize: true }),
+
     entities: [User, UserRole, Course, CourseCategory, Enroll],
-    // migrations: [path.join(__dirname, "/migrations/*")],
+    migrations: [path.join(__dirname, "/migrations/*")],
   });
 
-  // await connection.runMigrations();
+  if (__prod__) await connection.runMigrations();
 
   const app = express();
 
@@ -58,6 +75,7 @@ const main = async () => {
         httpOnly: true, //JS Browser cannot access the cookie
         secure: __prod__, //cookie only works in https
         sameSite: "lax", //protection against CSRF
+        domain: __prod__ ? '' : undefined
       },
       secret: `${process.env.SESSION_SECRET}`,
       saveUninitialized: false, //don't save empty sessions, right from the start
@@ -65,7 +83,14 @@ const main = async () => {
     })
   );
 
-  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+  const corsOption = {
+    origin: __prod__
+      ? process.env.CORS_ORIGIN_PROD_CLIENT
+      : process.env.CORS_ORIGIN_DEV_CLIENT,
+    credentials: true,
+  };
+
+  app.use(cors(corsOption));
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
@@ -78,7 +103,12 @@ const main = async () => {
       ],
       validate: false,
     }),
-    context: ({ req, res }): Context => ({ req, res, connection, dataLoaders: buildDataLoaders() }),
+    context: ({ req, res }): Context => ({
+      req,
+      res,
+      connection,
+      dataLoaders: buildDataLoaders(),
+    }),
     introspection: true,
     plugins: [
       ApolloServerPluginLandingPageGraphQLPlayground({

@@ -1,0 +1,5 @@
+query CoursesByCategory($categoryId:String!){
+  coursesByCategory(categoryId:$categoryId){
+   ...courseInfo
+  }
+}

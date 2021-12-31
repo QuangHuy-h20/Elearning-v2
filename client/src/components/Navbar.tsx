@@ -59,7 +59,7 @@ const Navbar = () => {
     <Transition
       as="div"
       show={isOpen}
-      className="absolute z-50 top-full w-60 h-38 p-1 bg-gray-800 border border-white rounded-lg bg-opacity-70 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
+      className="absolute z-50 top-full w-60 h-38 p-1 bg-black border border-white rounded-lg bg-opacity-10 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
       enter="ease-out duration-300"
       enterFrom="opacity-0"
       enterTo="opacity-100"
@@ -70,11 +70,11 @@ const Navbar = () => {
       <ul className="m-2 h-full">
         {catData?.categories?.map((category) => (
           <>
-          <li key={category.id} className="relative py-3 text-sm hover:bg-gray-700 hover:bg-opacity-90 hover:border rounded-lg">
             <NextLink href={`/courses/${category.id}`}>
+          <li key={category.id} className="relative py-3 text-sm hover:backdrop-filter hover:backdrop-blur hover:bg-gray-500 hover:bg-opacity-20 hover:border rounded-lg">
               <a className="px-2">{category.categoryName}</a>
-            </NextLink>
           </li>
+            </NextLink>
           </>
         ))}
       </ul>
@@ -85,7 +85,7 @@ const Navbar = () => {
     <Transition
       as="div"
       show={isShow}
-      className="absolute z-50 top-full right-0 w-40 h-38 p-1 bg-gray-800 border border-white rounded-lg bg-opacity-70 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
+      className="absolute z-50 top-full right-0 w-40 h-38 p-1 bg-black border border-white rounded-lg bg-opacity-10 focus-visible:outline-none focus-visible:ring backdrop-filter backdrop-blur border-opacity-10 "
       enter="ease-out duration-300"
       enterFrom="opacity-0"
       enterTo="opacity-100"
@@ -94,17 +94,17 @@ const Navbar = () => {
       leaveTo="opacity-0"
     >
       <ul className="m-2 h-full text-sm">
-        <li key="account" className="relative py-3 text-sm hover:bg-gray-500 hover:border rounded-lg">
+        <li key="account" className="relative py-3 text-sm hover:bg-gray-500 hover:bg-opacity-40 hover:border rounded-lg">
           <NextLink href="/user">
           <a className="px-2">Account</a>
           </NextLink>
         </li>
-        <li key="edit" className="relative py-3 text-sm hover:bg-gray-500 hover:border rounded-lg">
+        <li key="edit" className="relative py-3 text-sm hover:bg-gray-500 hover:bg-opacity-40 hover:border rounded-lg">
           <NextLink href="/user/edit-profile">
           <a className="px-2">Edit profile</a>
           </NextLink>
         </li>
-        <li key="logout" className="relative py-3 text-sm hover:bg-gray-500 hover:border rounded-lg">
+        <li key="logout" className="relative py-3 text-sm hover:bg-gray-500 hover:bg-opacity-40 hover:border rounded-lg">
           <button className="px-2" onClick={logoutUser}>Logout</button>
         </li>
       </ul>
@@ -182,7 +182,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="relative flex justify-between items-center  border-gray-600 border-b border-opacity-60 h-20 px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-56">
+    <header className="relative flex justify-between items-center shadow-inner border-gray-600 border-b border-opacity-60 h-20 px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-56">
       <nav className="flex justify-between items-center w-full h-full py-5">
       <div className="lg:hidden">
           <Burger />
@@ -199,7 +199,7 @@ const Navbar = () => {
               onMouseLeave={() => setIsOpen(false)}
               className="relative flex flex-row items-center xl:mx-10 lg:mx-6 cursor-pointer"
             >
-              <span className="categories mr-2 py-8 text-white text-opacity-80 text-sm">Categories</span>
+              <span className="categories mr-2 py-8 text-white text-sm">Categories</span>
               <DownArrow />
               {showCategory()}
             </div>

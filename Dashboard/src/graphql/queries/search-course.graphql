@@ -1,0 +1,13 @@
+query Search($searchInput: SearchInput!){
+  searchListings(searchInput:$searchInput){
+    id
+    courseName
+    courseCode
+    textSnippet
+    image
+    user{
+      username
+    }
+    view
+  }
+}

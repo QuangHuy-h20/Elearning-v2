@@ -1,10 +1,10 @@
-query Courses($limit: Int!, $cursor: String){
-    courses(limit: $limit, cursor: $cursor){
-        totalCount
-        hasMore
-        cursor
-        paginatedCourses{
-            ...courseInfo
-        }
+query courses($limit: Int!, $cursor: String) {
+  courses(limit: $limit, cursor: $cursor) {
+    totalCount
+    hasMore
+    cursor
+    paginatedCourses {
+      ...courseInfo
     }
+  }
 }

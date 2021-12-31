@@ -39,7 +39,6 @@ const uploadFileBucket = gc.bucket("upload-image-elearning");
 
 @Resolver((_of) => Course)
 export class CourseResolver {
-
   //=======================FIELD RESOLVER=======================
   @FieldResolver((_return) => String)
   textSnippet(@Root() root: Course) {
@@ -56,8 +55,8 @@ export class CourseResolver {
   }
 
   @FieldResolver((_return) => CourseCategory)
-  async category(@Root() root: CourseCategory) {
-    return await CourseCategory.findOne(root.categoryName);
+  async category(@Root() root: Course) {
+    return await CourseCategory.findOne(root.categoryId);
   }
 
   @FieldResolver((_return) => Int)
@@ -79,7 +78,7 @@ export class CourseResolver {
 
   //=======================QUERY=======================
 
-  //Query for get all course
+  //Query for get all course paginated
   @Query((_return) => PaginatedCourses, { nullable: true })
   async courses(
     @Arg("limit", (_type) => Int) limit: number,
@@ -129,6 +128,16 @@ export class CourseResolver {
           : courses.length !== totalCourseCount,
         paginatedCourses: courses,
       };
+    } catch (error) {
+      return null;
+    }
+  }
+
+  //Query for all courses
+  @Query((_return) => [Course], { nullable: true })
+  async allCourses(): Promise<Course[] | null> {
+    try {
+      return await Course.find();
     } catch (error) {
       return null;
     }
@@ -360,8 +369,11 @@ export class CourseResolver {
         userId,
       });
 
-      if (existingEnroll && existingEnroll.active !== enrollStatusValue) {
-        await transactionEntityManager.delete(Enroll, {active: EnrollStatus.enroll});
+      if (existingEnroll && (existingEnroll.active !== enrollStatusValue)) {
+        await transactionEntityManager.delete(Enroll, {
+          courseId,
+          userId,
+        });
 
         course = await transactionEntityManager.save(Course, {
           ...course,

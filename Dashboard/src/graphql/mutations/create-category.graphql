@@ -1,0 +1,7 @@
+mutation CreateCategory($createCourseCategoryInput: CreateCourseCategoryInput!) {
+  createCategory(createCourseCategoryInput: $createCourseCategoryInput) {
+    code
+    success
+    message
+  }
+}

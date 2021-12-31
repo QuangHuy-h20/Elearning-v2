@@ -1,18 +1,16 @@
-import { Button, Result } from 'antd';
-import React from 'react';
-import { history } from 'umi';
+import NextLink from "next/link";
 
-const NoFoundPage: React.FC = () => (
-  <Result
-    status="404"
-    title="404"
-    subTitle="Sorry, the page you visited does not exist."
-    extra={
-      <Button type="primary" onClick={() => history.push('/')}>
-        Back Home
-      </Button>
-    }
-  />
-);
+const PageNotFound = () => {
+  return (
+    <div className="flex flex-col justify-center items-center h-screen">
+      <h1 className="text-center text-6xl mb-10">404, Page not found</h1>
+      <NextLink href="/">
+        <a className="flex justify-between py-4 px-8 bg-red-400 rounded-lg">
+          <span className="ml-1">Back to Home</span>
+        </a>
+      </NextLink>
+    </div>
+  );
+};
 
-export default NoFoundPage;
+export default PageNotFound;

@@ -99,7 +99,7 @@ const UpdateCourse = () => {
 
   return (
     <Wrapper>
-      <h2 className="text-4xl text-center my-3">Update user profile</h2>
+      <h2 className="text-4xl text-center my-3">Update course</h2>
       <form className="w-2/5" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group flex flex-col py-2">
           <label className="pl-3 text-md" htmlFor="courseName">

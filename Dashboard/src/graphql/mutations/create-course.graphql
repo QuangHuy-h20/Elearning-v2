@@ -1,0 +1,5 @@
+mutation CreateCourse($file: Upload!, $createCourseInput: CreateCourseInput!) {
+  createCourse(file: $file, createCourseInput: $createCourseInput) {
+    ...courseMutationResponse
+  }
+}

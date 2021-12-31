@@ -3,10 +3,32 @@
 @tailwind utilities;
 
 
+html {
+	scrollbar-width: thin;
+	scrollbar-color: #383D44;
+	}
+	body::-webkit-scrollbar {
+	  width: 12px;
+	}
+	body::-webkit-scrollbar-track {
+	  background: rgba(20, 19, 22, 1)e;
+	}
+	
+	body::-webkit-scrollbar-thumb {
+	  background-color: #383D44;
+	  border-radius: 10px;
+	}
+	html,
+	body {
+	  scroll-behavior: smooth;
+	}
+
 body {
 	font-family: 'Poppins', san-serif !important;
 	background-color: rgba(20, 19, 22, 1);
 	color: #fff;
+	-moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
 }
 
 

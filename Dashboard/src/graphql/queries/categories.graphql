@@ -1,0 +1,6 @@
+query CourseCategory {
+  categories {
+    id
+    categoryName
+  }
+}

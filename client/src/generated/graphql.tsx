@@ -213,6 +213,7 @@ export type PaginatedCourses = {
 
 export type Query = {
   __typename?: 'Query';
+  allCourses?: Maybe<Array<Course>>;
   categories?: Maybe<Array<CourseCategory>>;
   course?: Maybe<Course>;
   courses?: Maybe<PaginatedCourses>;
@@ -278,6 +279,7 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
+  count?: Maybe<Scalars['Float']>;
   coursesEnrolledByUser?: Maybe<Array<Course>>;
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
@@ -1079,7 +1081,7 @@ export type CoursesByCategoryQueryHookResult = ReturnType<typeof useCoursesByCat
 export type CoursesByCategoryLazyQueryHookResult = ReturnType<typeof useCoursesByCategoryLazyQuery>;
 export type CoursesByCategoryQueryResult = Apollo.QueryResult<CoursesByCategoryQuery, CoursesByCategoryQueryVariables>;
 export const CoursesDocument = gql`
-    query Courses($limit: Int!, $cursor: String) {
+    query courses($limit: Int!, $cursor: String) {
   courses(limit: $limit, cursor: $cursor) {
     totalCount
     hasMore

@@ -46,6 +46,16 @@ export class UserResolver {
     }
   }
 
+  @FieldResolver((_return) => Number, {nullable: true})
+  async count(@Ctx() { dataLoaders: { courseLoader } }: Context, @Root() root: User,){
+    try {
+      return await (await courseLoader.load(root.id)).length;
+    } catch (error) {
+      return 0;
+    }
+  }
+  
+
   //=============================QUERY==========================
 
   //Query for all users

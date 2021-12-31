@@ -1,0 +1,7 @@
+query CourseIds($limit: Int!, $cursor: String){
+    courses(limit:$limit, cursor: $cursor){
+        paginatedCourses{
+            id
+        }
+    }
+}

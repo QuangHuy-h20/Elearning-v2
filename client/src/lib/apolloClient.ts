@@ -46,6 +46,7 @@ function createApolloClient(headers: IncomingHttpHeaders | null = null) {
     });
   };
 
+
   const uploadLink = createUploadLink({
     uri:
       process.env.NODE_ENV === "production"
@@ -55,7 +56,10 @@ function createApolloClient(headers: IncomingHttpHeaders | null = null) {
     fetch: enhancedFetch,
   });
 
-  const links = from([errorLink, uploadLink as unknown as ApolloLink]);
+  const links = from([
+    errorLink,
+    uploadLink as unknown as ApolloLink,
+  ]);
 
   return new ApolloClient({
     ssrMode: typeof window === "undefined",

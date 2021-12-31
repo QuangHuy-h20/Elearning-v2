@@ -1,0 +1,9 @@
+fragment userInfo on User {
+    id
+    username
+    email
+    roleId
+    phoneNumber
+    profilePicture
+    
+}
